@@ -18,6 +18,7 @@ mkdir -p "${DATA_DIR}"
 function cleanup() {
     docker container logs "${CONTAINER_NAME}"
     docker container rm --force "${CONTAINER_NAME}"
+    [[ -v GITHUB_ACTIONS ]] && sudo rm -rf "${DATA_DIR}"
     rm -rf "${TESTDIR}"
 }
 
