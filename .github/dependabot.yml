@@ -2,7 +2,8 @@ version: 2
 updates:
   # Maintain dependencies for container images
   - package-ecosystem: "docker"
-    directory: "/*"
+    # blocked due to: https://github.com/dependabot/dependabot-core/issues/2178
+    directory: "/bitwarden_rs"
     schedule:
       interval: "daily"
   # Maintain dependencies for GitHub Actions
