@@ -1,4 +1,3 @@
-
 # use the official bitwarden alpine image and version
 FROM --platform=${BUILDPLATFORM:-linux/amd64} bitwardenrs/server:1.18.0-alpine as base
 
