@@ -69,6 +69,9 @@ jobs:
         with:
           images: ghcr.io/frezbo/${{ matrix.project }}
           tag-latest: false
+          tag-custom: |
+            ${{ matrix.version }}
+          tag-custom-only: true
           label-custom: |
             org.opencontainers.image.version=${{ matrix.version }}
       - name: Build
