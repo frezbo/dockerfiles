@@ -100,7 +100,7 @@ jobs:
           context: ${{ matrix.project }}
           file: ${{ matrix.dockerfile }}
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
           tags: ${{ steps.docker_meta.outputs.tags }}
