@@ -16,7 +16,7 @@ RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build ./cmd/hydroxide
 
 FROM scratch
 COPY --from=builder /go/src/github.com/emersion/hydroxide/hydroxide /bin/hydroxide
-# add ca certificates
+# add ca certificates from base image
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 ENV XDG_CONFIG_HOME=/home
 USER 1000

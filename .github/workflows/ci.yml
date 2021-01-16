@@ -105,7 +105,10 @@ jobs:
           docker buildx build --load --build-arg VERSION=${{ matrix.version }} -t ghcr.io/frezbo/${{ matrix.project }}:${{ matrix.version }} ${{ matrix.project }}
       - name: test
         run: |
-          [[ -e ${{ matrix.project }}/test.sh ]] && bash ${{ matrix.project }}/test.sh ${{ matrix.project }} ${{ matrix.version }}
+          set -eu -o pipefail
+          if [[ -e ${{ matrix.project }}/test.sh ]]; then
+            bash ${{ matrix.project }}/test.sh ${{ matrix.project }} ${{ matrix.version }}
+          fi
       - name: push
         if: github.event_name != 'pull_request'
         uses: docker/build-push-action@v2
