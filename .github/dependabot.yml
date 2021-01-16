@@ -11,3 +11,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+  # Maintain dependencies for Go projects
+  - package-ecosystem: "gomod"
+    directory: "/hydroxide"
+    schedule:
+      interval: "daily"
