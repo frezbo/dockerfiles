@@ -10,7 +10,7 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 ENV GOPATH=/go/src/
 WORKDIR /go/src/github.com/emersion/hydroxide
-RUN git clone --branch ${VERSION} /go/src/github.com/emersion/hydroxide
+RUN git clone --branch ${VERSION} https://github.com/emersion/hydroxide.git /go/src/github.com/emersion/hydroxide
 
 RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build ./cmd/hydroxide
 
