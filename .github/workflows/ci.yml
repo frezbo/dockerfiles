@@ -18,14 +18,23 @@ jobs:
       - name: generate matrix
         id: generate-matrix
         run: |
-          CHANGED_DIRS=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} '*Dockerfile' | xargs -I {} dirname {})
+          CHANGED_DIRS=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} '*Dockerfile' '*go.mod' | xargs -I {} dirname {} | uniq)
           MATRIX_PROJECTS_JSON="["
           MATRIX_INCLUDE_JSON="["
 
           for DIR in ${CHANGED_DIRS}; do
               MATRIX_PROJECTS_JSON+=$(sed 's/^/"/;s/$/"/' <<< "${DIR}")
               DOCKERFILE="${DIR}/Dockerfile"
-              MATRIX_INCLUDE_JSON+="{\"project\": \"${DIR}\", \"dockerfile\": \"${DOCKERFILE}\", \"version\": \"$(grep "FROM --platform" "${DOCKERFILE}" | awk '{ print $3}' | awk -F ':' '{ print $2}' | sed 's/-.*//g')\"}"
+              GOMOD_FILE="${DIR}/go.mod"
+
+              # if go.mod exists find the version from it, else assume we are re-building a public image
+              if [[ -e "${GOMOD_FILE}" ]]; then
+                VERSION=$(grep "require" "${GOMOD_FILE}" | awk '{ print $3 }')
+              else
+                VERSION=$(grep "FROM --platform" "${DOCKERFILE}" | awk '{ print $3}' | awk -F ':' '{ print $2}' | sed 's/-.*//g')
+              fi
+
+              MATRIX_INCLUDE_JSON+="{\"project\": \"${DIR}\", \"dockerfile\": \"${DOCKERFILE}\", \"version\": \"${VERSION}\"}"
           done
 
           MATRIX_INCLUDE_JSON="${MATRIX_INCLUDE_JSON//\}\{/\}, \{}"
@@ -90,10 +99,10 @@ jobs:
       #       ${{ steps.docker_meta.outputs.labels }}
       - name: build
         run: |
-          docker buildx build --load -t ghcr.io/frezbo/${{ matrix.project }}:${{ matrix.version }} ${{ matrix.project }}
+          docker buildx build --load --build-arg VERSION=${{ matrix.version }} -t ghcr.io/frezbo/${{ matrix.project }}:${{ matrix.version }} ${{ matrix.project }}
       - name: test
-        run: |        
-          bash ${{ matrix.project }}/test.sh ${{ matrix.project }} ${{ matrix.version }}
+        run: |
+          [[ -e ${{ matrix.project }}/test.sh ]] && bash ${{ matrix.project }}/test.sh ${{ matrix.project }} ${{ matrix.version }}
       - name: push
         if: github.event_name != 'pull_request'
         uses: docker/build-push-action@v2
@@ -101,7 +110,9 @@ jobs:
           context: ${{ matrix.project }}
           file: ${{ matrix.dockerfile }}
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-          push: false
+          build-args: |
+            VERSION=${{ matrix.version }}
+          push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
           tags: ${{ steps.docker_meta.outputs.tags }}
