@@ -15,6 +15,8 @@ ENV ROCKET_WORKERS=10
 COPY --from=base /Rocket.toml /Rocket.toml
 COPY --from=base /web-vault/ /web-vault/
 COPY --from=base /bitwarden_rs/ /bitwarden_rs
+# add ca certificates from base image
+COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 EXPOSE 8080
 
