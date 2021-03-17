@@ -6,6 +6,11 @@ updates:
     directory: "/bitwarden_rs"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    # blocked due to: https://github.com/dependabot/dependabot-core/issues/2178
+    directory: "/mattermost"
+    schedule:
+      interval: "daily"
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
