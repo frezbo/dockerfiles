@@ -1,5 +1,5 @@
 # use the official bitwarden alpine image
-FROM --platform=${BUILDPLATFORM:-linux/amd64} mattermost/mattermost-team-edition:5.32.1 as base
+FROM --platform=${BUILDPLATFORM:-linux/amd64} mattermost/mattermost-team-edition:5.33.1 as base
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
