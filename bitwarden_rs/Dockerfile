@@ -1,5 +1,5 @@
 # use the official bitwarden alpine image
-FROM --platform=${BUILDPLATFORM:-linux/amd64} bitwardenrs/server:1.20.0-alpine as base
+FROM --platform=${BUILDPLATFORM:-linux/amd64} bitwardenrs/server:1.21.0-alpine as base
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
