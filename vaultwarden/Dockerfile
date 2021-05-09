@@ -1,5 +1,5 @@
-# use the official bitwarden alpine image
-FROM --platform=${BUILDPLATFORM:-linux/amd64} bitwardenrs/server:1.21.0-alpine as base
+# use the official vaultwarden alpine image
+FROM --platform=${BUILDPLATFORM:-linux/amd64} vaultwarden/server:1.21.0-alpine as base
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -14,11 +14,12 @@ ENV ROCKET_WORKERS=10
 
 COPY --from=base /Rocket.toml /Rocket.toml
 COPY --from=base /web-vault/ /web-vault/
-COPY --from=base /bitwarden_rs/ /bitwarden_rs
+COPY --from=base /vaultwarden/ /vaultwarden
 # add ca certificates from base image
 COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 EXPOSE 8080
 
 USER 1000
-ENTRYPOINT ["/bitwarden_rs"]
+ENTRYPOINT ["/vaultwarden"]
+
