@@ -40,51 +40,35 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_ACCESS_TOKEN }}
       - name: Docker meta
-        id: docker_meta
+        id: meta
         uses: crazy-max/ghaction-docker-meta@v2.4.0
         with:
           images: ghcr.io/frezbo/${{ matrix.project }}
-          tag-latest: false
-          tag-custom: |
-            ${{ matrix.version }}
-          tag-custom-only: true
-          label-custom: |
+          flavor: |
+            latest=false
+          tags: |
+            type=raw,enable=true,value=${{ matrix.version }}
+          labels: |
             org.opencontainers.image.version=${{ matrix.version }}
-      # blocked due to https://github.com/docker/buildx/issues/59
-      # - name: Build
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ${{ matrix.project }}
-      #     file: ${{ matrix.dockerfile }}
-      #     platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-      #     push: false
-      #     # load: true
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
-      #     tags: ${{ steps.docker_meta.outputs.tags }}
-      #     labels: |
-      #       ${{ steps.docker_meta.outputs.labels }}
-      - name: build
-        run: |
-          docker buildx build --load --build-arg VERSION=${{ matrix.version }} -t ghcr.io/frezbo/${{ matrix.project }}:${{ matrix.version }} ${{ matrix.project }}
+      - name: build/push
+        uses: docker/bake-action@v1
+        env:
+          CONTEXT: ${{ matrix.project }}
+          DOCKERFILE: Dockerfile
+          VERSION: ${{ matrix.version }}
+          LOAD_IMAGE_IN_CI: ${{ github.event_name == 'pull_request' }}
+        with:
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+          targets: build
+          pull: true
+          load: ${{ github.event_name == 'pull_request' }}
+          push: ${{ github.event_name != 'pull_request' }}
       - name: test
+        if: github.event_name == 'pull_request'
         run: |
           set -eu -o pipefail
           if [[ -e ${{ matrix.project }}/test.sh ]]; then
             bash ${{ matrix.project }}/test.sh ${{ matrix.project }} ${{ matrix.version }}
           fi
-      - name: push
-        if: github.event_name != 'pull_request'
-        uses: docker/build-push-action@v2
-        with:
-          context: ${{ matrix.project }}
-          file: ${{ matrix.dockerfile }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-          build-args: |
-            VERSION=${{ matrix.version }}
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: |
-            ${{ steps.docker_meta.outputs.labels }}
