@@ -1,5 +1,7 @@
 # dockerfiles
 
+[![Build and Publish Docker image](https://github.com/frezbo/dockerfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/frezbo/dockerfiles/actions/workflows/ci.yml)
+
 Repo for various linux container images.
 
 - [dockerfiles](#dockerfiles)
