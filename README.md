@@ -8,6 +8,7 @@ Repo for various linux container images.
 
 # Inspiration
 
+* Mostly inspired from [Jess Frazelle's](https://github.com/jessfraz/) [dockerfiles](https://github.com/jessfraz/dockerfiles) repo
 * Rebuild public images to remove shell and make it leaner and secure
 * Build images for repos that doesn't have a dockerfile
 * Automatic dependency updates using [Dependabot](https://docs.github.com/en/github/administering-a-repository/keeping-your-dependencies-updated-automatically)
@@ -18,10 +19,7 @@ Repo for various linux container images.
 
 ```tree
 .
-├── bitwarden_rs
-│   ├── Dockerfile
-│   ├── README.md
-│   └── test.sh
+├── docker-bake.hcl
 ├── generate_matrix.sh
 ├── hydroxide
 │   ├── Dockerfile
@@ -29,7 +27,11 @@ Repo for various linux container images.
 │   ├── go.sum
 │   └── README.md
 ├── LICENSE
-└── README.md
+├── README.md
+└── vaultwarden
+    ├── Dockerfile
+    ├── README.md
+    └── test.sh
 
 ```
 
