@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.GHCR_ACCESS_TOKEN }}
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v3.1.0
+        uses: docker/metadata-action@v3.2.0
         with:
           images: ghcr.io/frezbo/${{ matrix.project }}
           flavor: |
