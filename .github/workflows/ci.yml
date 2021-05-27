@@ -51,7 +51,7 @@ jobs:
           labels: |
             org.opencontainers.image.version=${{ matrix.version }}
       - name: build/push
-        uses: docker/bake-action@v1.4.1
+        uses: docker/bake-action@v1.4.2
         env:
           CONTEXT: ${{ matrix.project }}
           DOCKERFILE: Dockerfile
