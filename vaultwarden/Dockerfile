@@ -20,6 +20,7 @@ COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificat
 
 EXPOSE 8080
 
+# run as non-root
 USER 1000
 ENTRYPOINT ["/vaultwarden"]
 

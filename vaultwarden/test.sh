@@ -24,7 +24,6 @@ function cleanup() {
 
 trap cleanup EXIT SIGINT
 
-
 (
     cd "${TESTDIR}"
     # generate keys for bitwarden
