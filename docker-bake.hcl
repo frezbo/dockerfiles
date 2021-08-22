@@ -19,8 +19,7 @@ target "build" {
   cache-to   = ["type=registry,ref=ghcr.io/frezbo/${CONTEXT}/builder-cache:latest"]
   platforms = equal("${LOAD_IMAGE_IN_CI}", "true") ? ["linux/amd64"] : [
     "linux/amd64",
-    "linux/arm64",
-    "linux/arm/v6",
     "linux/arm/v7"
   ]
 }
+
