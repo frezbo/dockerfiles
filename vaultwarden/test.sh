@@ -28,8 +28,7 @@ trap cleanup EXIT SIGINT
     cd "${TESTDIR}"
     # generate keys for bitwarden
     openssl genrsa -out "${DATA_DIR}/rsa_key.pem" 4096
-    openssl rsa -in "${DATA_DIR}/rsa_key.pem" -outform DER -out "${DATA_DIR}/rsa_key.der"
-    openssl rsa -in "${DATA_DIR}/rsa_key.der" -inform DER -RSAPublicKey_out -outform DER -out "${DATA_DIR}/rsa_key.pub.der"
+    openssl rsa -in "${DATA_DIR}/rsa_key.pem" -pubout "${DATA_DIR}/rsa_key.pub.pem"
     # change ownership of data directory when running in github actions
     [[ -v GITHUB_ACTIONS ]] && sudo chown -R 1000:1000 "${DATA_DIR}"
     docker container run --name "${CONTAINER_NAME}" --detach --publish 8080:8080 --volume "${DATA_DIR}/:/${DATA_DIR_NAME}/" "${IMAGE}"
@@ -37,3 +36,4 @@ trap cleanup EXIT SIGINT
     sleep 10
     curl -sf http://localhost:8080/alive
 )
+
