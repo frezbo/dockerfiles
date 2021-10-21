@@ -23,4 +23,3 @@ EXPOSE 8080
 # run as non-root user 1000
 USER 1000
 ENTRYPOINT ["/vaultwarden"]
-
