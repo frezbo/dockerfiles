@@ -6,14 +6,13 @@ updates:
     directory: "/vaultwarden"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    # blocked due to: https://github.com/dependabot/dependabot-core/issues/2178
+    directory: "/monito-rss"
+    schedule:
+      interval: "daily"
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-  # Maintain dependencies for Go projects
-  - package-ecosystem: "gomod"
-    directory: "/hydroxide"
-    schedule:
-      interval: "daily"
-

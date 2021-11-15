@@ -16,14 +16,11 @@ MATRIX_INCLUDE_JSON="["
 for DIR in ${CHANGED_DIRS}; do
     MATRIX_PROJECTS_JSON+=$(sed 's/^/"/;s/$/"/' <<< "${DIR}")
     DOCKERFILE="${DIR}/Dockerfile"
-    GOMOD_FILE="${DIR}/go.mod"
 
-    # if go.mod exists find the version from it, else assume we are re-building a public image
-    if [[ -e "${GOMOD_FILE}" ]]; then
-        VERSION=$(grep "require" "${GOMOD_FILE}" | awk '{ print $3 }')
-    else
-        VERSION=$(grep "FROM --platform" "${DOCKERFILE}" | awk '{ print $3}' | awk -F ':' '{ print $2}' | sed 's/-.*//g')
-    fi
+    pushd .
+    cd "${DIR}"
+    source version.sh
+    popd
 
     MATRIX_INCLUDE_JSON+="{\"project\": \"${DIR}\", \"dockerfile\": \"${DOCKERFILE}\", \"version\": \"${VERSION}\"}"
 done
