@@ -8,11 +8,10 @@ ARG TARGETARCH
 
 FROM scratch
 
-ENV ROCKET_ENV="production"
+ENV ROCKET_PROFILE="release"
+ENV ROCKET_ADDRESS=0.0.0.0
 ENV ROCKET_PORT=8080
-ENV ROCKET_WORKERS=10
 
-COPY --from=base /Rocket.toml /Rocket.toml
 COPY --from=base /web-vault/ /web-vault/
 COPY --from=base /vaultwarden/ /vaultwarden
 # add ca certificates from base image
