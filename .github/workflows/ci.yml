@@ -4,8 +4,11 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
 jobs:
   metadata:
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -37,7 +40,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_ACCESS_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4.0.1
