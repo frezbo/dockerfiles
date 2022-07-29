@@ -1,5 +1,5 @@
 # use the official vaultwarden alpine container image
-FROM --platform=${BUILDPLATFORM:-linux/amd64} vaultwarden/server:1.25.1-alpine as base
+FROM --platform=${BUILDPLATFORM:-linux/amd64} vaultwarden/server:1.25.2-alpine as base
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
