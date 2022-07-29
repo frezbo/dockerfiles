@@ -1,4 +1,4 @@
-FROM synzen/monitorss@sha256:99390fbfb08e16033d0ea26b4059c7c98bdaf78902a8a1c7d3bded10f9ad723c as monito-rss
+FROM synzen/monitorss@sha256:4eeb28e5df07686c724e7dbb470b6cd8c91e0aa9c9b5f11dde75b7880232454d as monito-rss
 
 FROM --platform=${BUILDPLATFORM:-linux/amd64} node:18-alpine@sha256:02009de840e80a6d810724021a6c4512b321c3f36eaa06f1546c400bc49a8fa0
 
