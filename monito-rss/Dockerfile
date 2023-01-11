@@ -1,6 +1,6 @@
-FROM synzen/monitorss@sha256:4eeb28e5df07686c724e7dbb470b6cd8c91e0aa9c9b5f11dde75b7880232454d as monito-rss
+FROM synzen/monitorss@sha256:386b0104565d1a8626c6eb606e4af921a2bbdc3d5fb929ff1b97e762937d0e52 as monito-rss
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} node:19-alpine@sha256:7567c58cc26fcb1e0aa88a36a7f8e110d5e38f6db5ee67fa9df3714d12a0378f
+FROM --platform=${BUILDPLATFORM:-linux/amd64} node:19-alpine@sha256:00c5c0850a48bbbf0136f1c886bad52784f9816a8d314a99307d734598359ed4
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
