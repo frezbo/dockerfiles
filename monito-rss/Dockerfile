@@ -7,6 +7,7 @@ ARG BUILDPLATFORM
 ARG TARGETOS
 ARG TARGETARCH
 
+WORKDIR /app
 COPY --from=monito-rss /app .
 USER 1000
 CMD ["server.js"]
