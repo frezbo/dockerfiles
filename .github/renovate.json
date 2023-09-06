@@ -1,48 +1,34 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
+        "config:base",
         ":dependencyDashboard",
-        ":semanticCommitScopeDisabled",
-        ":gitSignOff"
+        ":gitSignOff",
+        ":semanticCommitScopeDisabled"
     ],
     "prHeader": "Update Request | Renovate Bot",
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 0,
+    "branchConcurrentLimit": 0,
+    "enabledManagers": [
+        "regex"
+    ],
+    "packageRules": [
         {
             "matchPackagePatterns": [
                 "*"
             ],
-            "matchDatasources": [
-                "docker"
-            ],
-            "groupName": "container images"
-        },
-        {
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "matchDatasources": [
-                "go",
-                "golang-version"
-            ],
-            "groupName": "go packages"
-        },
-        {
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "matchDatasources": [
-                "npm"
-            ],
-            "groupName": "node packages"
-        },
-        {
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "matchDatasources": [
-                "git-refs",
-                "git-tags",
-                "github-tags",
-                "github-releases"
+            "matchUpdateTypes": [
+                "major",
+                "minor",
+                "patch",
+                "pin",
+                "pinDigest",
+                "digest",
+                "lockFileMaintenance",
+                "rollback",
+                "bump",
+                "replacement"
             ],
             "groupName": "releases"
         }
