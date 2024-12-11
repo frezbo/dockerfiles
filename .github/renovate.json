@@ -2,7 +2,6 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         "config:recommended",
-        ":dependencyDashboard",
         ":gitSignOff",
         ":semanticCommitScopeDisabled"
     ],
@@ -13,9 +12,10 @@
     "enabledManagers": [
         "custom.regex"
     ],
-    "regexManagers": [
-	    {
-            "fileMatch": [
+    "customManagers": [
+        {
+            "customType: "regex",
+            "fileMatcah": [
                 "Dockerfile"
             ],
             "depNameTemplate": "docker/dockerfile-upstream",
