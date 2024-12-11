@@ -13,6 +13,16 @@
     "enabledManagers": [
         "custom.regex"
     ],
+    "regexManagers": [
+	    {
+            "fileMatch": [
+                "Dockerfile"
+            ],
+            "depNameTemplate": "docker/dockerfile-upstream",
+            "datasourceTemplate": "docker",
+            "versioningTemplate": "docker"
+        }
+    ],
     "packageRules": [
         {
             "matchUpdateTypes": [
