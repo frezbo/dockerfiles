@@ -14,7 +14,7 @@
     ],
     "customManagers": [
         {
-            "customType: "regex",
+            "customType": "regex",
             "fileMatcah": [
                 "Dockerfile"
             ],
