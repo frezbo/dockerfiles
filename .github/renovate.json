@@ -15,7 +15,7 @@
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatcah": [
+            "fileMatch": [
                 "Dockerfile"
             ],
             "depNameTemplate": "docker/dockerfile-upstream",
