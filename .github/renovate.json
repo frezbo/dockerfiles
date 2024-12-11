@@ -8,39 +8,5 @@
     "prHeader": "Update Request | Renovate Bot",
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
-    "branchConcurrentLimit": 0,
-    "enabledManagers": [
-        "custom.regex"
-    ],
-    "customManagers": [
-        {
-            "customType": "regex",
-            "fileMatch": [
-                "Dockerfile"
-            ],
-            "depNameTemplate": "docker/dockerfile-upstream",
-            "datasourceTemplate": "docker",
-            "versioningTemplate": "docker"
-        }
-    ],
-    "packageRules": [
-        {
-            "matchUpdateTypes": [
-                "major",
-                "minor",
-                "patch",
-                "pin",
-                "pinDigest",
-                "digest",
-                "lockFileMaintenance",
-                "rollback",
-                "bump",
-                "replacement"
-            ],
-            "groupName": "releases",
-            "matchPackageNames": [
-                "*"
-            ]
-        }
-    ]
+    "branchConcurrentLimit": 0
 }
