@@ -5,8 +5,18 @@
         ":gitSignOff",
         ":semanticCommitScopeDisabled"
     ],
+    "separateMajorMinor": false,
     "prHeader": "Update Request | Renovate Bot",
-    "prHourlyLimit": 0,
-    "prConcurrentLimit": 0,
-    "branchConcurrentLimit": 0
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "major",
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "groupName": "releases"
+        }
+    ]
 }
